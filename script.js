@@ -1,14 +1,32 @@
 // active nav link on scroll
   const links = document.querySelectorAll('#mainNav a');
+  const nav = document.querySelector('#mainNav');
+  const navIndicator = document.querySelector('.nav-indicator');
   const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+  const moveNavIndicator = (link) => {
+    if (!nav || !navIndicator || !link) return;
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    navIndicator.style.left = `${linkRect.left - navRect.left}px`;
+    navIndicator.style.width = `${linkRect.width}px`;
+    navIndicator.style.opacity = '1';
+  };
   const setActive = () => {
     let idx = 0;
     const y = window.scrollY + 120;
     sections.forEach((s,i) => { if(s && s.offsetTop <= y) idx = i; });
     links.forEach((l,i) => l.classList.toggle('active', i===idx));
+    moveNavIndicator(links[idx]);
   };
   window.addEventListener('scroll', setActive);
+  window.addEventListener('resize', setActive);
   setActive();
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      moveNavIndicator(link);
+    });
+  });
 
   const projectsGrid = document.querySelector('#projectsGrid');
   const projectFilters = document.querySelector('#projectFilters');
