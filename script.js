@@ -3,6 +3,19 @@
   const nav = document.querySelector('#mainNav');
   const navIndicator = document.querySelector('.nav-indicator');
   const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+  const scrollToSection = (href) => {
+    if (!href || !href.startsWith('#')) return false;
+    const targetId = href.slice(1);
+    const target = document.getElementById(targetId);
+    if (!target) return false;
+
+    const offset = 96;
+    const top = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - offset);
+    window.scrollTo({ top, behavior: 'smooth' });
+    window.location.hash = targetId;
+    history.pushState(null, '', href);
+    return true;
+  };
   const moveNavIndicator = (link) => {
     if (!nav || !navIndicator || !link) return;
     const navRect = nav.getBoundingClientRect();
@@ -126,8 +139,9 @@
       spaceBetween: 20,
       loop: true,
       watchOverflow: true,
+      speed: 1200,
       autoplay: {
-        delay: 3200,
+        delay: 4500,
         disableOnInteraction: false
       },
       navigation: {
@@ -259,9 +273,17 @@
       menuClose.addEventListener('click', closeMenu);
     }
 
-    mainNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    mainNav.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (event) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+
+        event.preventDefault();
         if (window.innerWidth < 900) closeMenu();
+
+        setTimeout(() => {
+          scrollToSection(href);
+        }, window.innerWidth < 900 ? 260 : 0);
       });
     });
   }
