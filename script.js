@@ -47,7 +47,7 @@
 
     const tween = gsap.to(track, {
       xPercent: -50,
-      duration: 80,
+      duration: 44,
       ease: 'none',
       repeat: -1,
       force3D: true
@@ -88,8 +88,9 @@
   }
 
   const projectsGrid = document.querySelector('#projectsGrid');
-  const projectFilters = document.querySelector('#projectFilters');
+  const projectsSwiper = document.querySelector('#projectsSwiper');
   const teamGrid = document.querySelector('#teamGrid');
+  let projectSwiper = null;
 
   const fallbackProjects = [
     { title: 'FitZone — Fitness Website', thumbLabel: 'FitZone', thumbTag: 'Website', thumbClass: 'thumb-1', category: 'Websites', meta: 'React · Node.js · MongoDB', link: '#', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80' },
@@ -110,45 +111,72 @@
   ];
 
   let allProjects = [];
-  let activeProjectCategory = 'All';
 
-  const renderProjectFilters = (items) => {
-    if (!projectFilters || !Array.isArray(items)) return;
-    const categories = ['All', ...new Set(items.map(project => project.category).filter(Boolean))];
-    projectFilters.innerHTML = categories.map(category => `
-      <button type="button" class="filter-pill${category === activeProjectCategory ? ' active' : ''}" data-category="${category}">${category}</button>
-    `).join('');
+  const initProjectSwiper = () => {
+    if (!projectsSwiper || !projectsGrid) return;
 
-    projectFilters.querySelectorAll('.filter-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        activeProjectCategory = pill.dataset.category || 'All';
-        renderProjectFilters(allProjects);
-        renderProjects(allProjects);
-      });
+    if (projectSwiper) {
+      projectSwiper.destroy(true, true);
+      projectSwiper = null;
+    }
+
+    projectSwiper = new Swiper(projectsSwiper, {
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      spaceBetween: 20,
+      loop: true,
+      watchOverflow: true,
+      autoplay: {
+        delay: 3200,
+        disableOnInteraction: false
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+          slidesPerGroup: 1
+        },
+        640: {
+          slidesPerView: 2,
+          slidesPerGroup: 2
+        },
+        1024: {
+          slidesPerView: 2,
+          slidesPerGroup: 2
+        }
+      }
     });
   };
 
   const renderProjects = (items) => {
     if (!projectsGrid || !Array.isArray(items)) return;
-    const filteredItems = activeProjectCategory === 'All'
-      ? items
-      : items.filter(project => project.category === activeProjectCategory);
 
-    projectsGrid.innerHTML = filteredItems.map(project => `
-      <div class="proj-card">
-        <div class="proj-thumb ${project.thumbClass || ''}">
-          ${project.image ? `<img src="${project.image}" alt="${project.title || project.thumbLabel || 'Project image'}">` : ''}
-          <div class="proj-thumb-overlay"></div>
-          <div class="proj-thumb-content">${project.thumbLabel || ''}</div>
-          <span class="tag">${project.thumbTag || ''}</span>
-        </div>
-        <div class="proj-body">
-          <h4>${project.title || ''}</h4>
-          <div class="meta">${project.meta || ''}</div>
-          <a href="${project.link || '#'}" class="view">View Project →</a>
+    projectsGrid.innerHTML = items.map(project => `
+      <div class="swiper-slide">
+        <div class="proj-card">
+          <div class="proj-thumb ${project.thumbClass || ''}">
+            ${project.image ? `<img src="${project.image}" alt="${project.title || project.thumbLabel || 'Project image'}">` : ''}
+            <div class="proj-thumb-overlay"></div>
+            <div class="proj-thumb-content">${project.thumbLabel || ''}</div>
+            <span class="tag">${project.thumbTag || ''}</span>
+          </div>
+          <div class="proj-body">
+            <h4>${project.title || ''}</h4>
+            <div class="meta">${project.meta || ''}</div>
+            <a href="${project.link || '#'}" class="view">View Project →</a>
+          </div>
         </div>
       </div>
     `).join('');
+
+    initProjectSwiper();
   };
 
   const renderTeam = (items) => {
@@ -200,8 +228,7 @@
     fetch('teammember.json').then(response => response.json()).catch(() => fallbackTeam)
   ]).then(([projects, teamMembers]) => {
     allProjects = Array.isArray(projects) ? projects : fallbackProjects;
-    renderProjectFilters(allProjects);
-    renderProjects(projects);
+    renderProjects(allProjects);
     renderTeam(teamMembers);
   });
 

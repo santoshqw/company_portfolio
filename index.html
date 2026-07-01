@@ -8,15 +8,17 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <div class="nav-inner">
-    <a href="#home" class="brand">
+    <a href="index.html" class="brand">
       <img src="logo.jpg" alt="Code&amp;Syntax logo" class="brand-logo">
       <span>Code&amp;Syntax<small>AGENCY</small></span>
     </a>
@@ -117,9 +119,12 @@
       <p>Explore some of our recent projects across websites, apps and e-commerce stores.</p>
     </div>
 
-    <div class="filter-row" id="projectFilters"></div>
-
-    <div class="proj-grid" id="projectsGrid"></div>
+    <div class="projects-swiper swiper" id="projectsSwiper">
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-wrapper" id="projectsGrid"></div>
+      <div class="swiper-pagination"></div>
+    </div>
 
     <div class="center-cta"><a href="#contact" class="btn btn-outline">View All Projects</a></div>
   </div>
@@ -166,7 +171,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a href="#home" class="brand"><img src="logo.jpg" alt="Code&amp;Syntax logo" class="brand-logo"><span>Code&amp;Syntax<small style="color:#8fa2ff;">AGENCY</small></span></a>
+        <a href="index.html" class="brand"><img src="logo.jpg" alt="Code&amp;Syntax logo" class="brand-logo"><span>Code&amp;Syntax<small style="color:#8fa2ff;">AGENCY</small></span></a>
         <p class="desc">A modern web development agency crafting fast, responsive and user-focused digital products.</p>
       </div>
       <div>
