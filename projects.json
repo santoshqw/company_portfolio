@@ -1,0 +1,21 @@
+[
+  {
+    "title": "FitZone — Fitness Website",
+    "thumbLabel": "FitZone",
+    "thumbTag": "Website",
+    "thumbClass": "thumb-1",
+    "category": "Websites",
+    "meta": "React · Node.js · MongoDB",
+    "link": "#"
+  },
+  {
+    "title": "TaskPro — Project Management App",
+    "thumbLabel": "TaskPro",
+    "thumbTag": "Web App",
+    "thumbClass": "thumb-2",
+    "category": "Web Applications",
+    "meta": "MERN Stack · Tailwind CSS",
+    "link": "#"
+  }
+ 
+]

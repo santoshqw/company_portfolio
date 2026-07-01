@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Rohit Sharma",
+    "role": "Founder & CEO",
+    "bio": "Full-stack developer with 8+ years of experience building scalable web applications.",
+    "initials": "RS",
+    "image": "logo.jpg",
+    "gradient": "linear-gradient(135deg,#2f5bff,#1d3fd6)",
+    "socials": ["in", "gh", "tw"]
+  }
+  ,
+  {
+    "name": "Aisha Khan",
+    "role": "UI/UX Designer",
+    "bio": "Designs clean, user-friendly interfaces that create meaningful user experiences.",
+    "initials": "AK",
+    "image": "",
+    "gradient": "linear-gradient(135deg,#e2632a,#f7a05a)",
+    "socials": ["in", "gh", "tw"]
+  },
+  {
+    "name": "Arjun Mehta",
+    "role": "Frontend Developer",
+    "bio": "Specializes in React and modern JavaScript to build fast and interactive UIs.",
+    "initials": "AM",
+    "image": "",
+    "gradient": "linear-gradient(135deg,#0e7a4e,#1fae74)",
+    "socials": ["in", "gh", "tw"]
+  }
+]
