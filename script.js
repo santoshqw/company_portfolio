@@ -28,19 +28,78 @@
     });
   });
 
+  const stackRow = document.querySelector('.stack-row');
+  if (stackRow && window.gsap) {
+    const originalItems = Array.from(stackRow.children);
+    const track = document.createElement('div');
+    track.className = 'stack-track';
+
+    const group = document.createElement('div');
+    group.className = 'stack-group';
+    originalItems.forEach(item => group.appendChild(item));
+
+    const clone = group.cloneNode(true);
+    track.appendChild(group);
+    track.appendChild(clone);
+
+    stackRow.innerHTML = '';
+    stackRow.appendChild(track);
+
+    const tween = gsap.to(track, {
+      xPercent: -50,
+      duration: 80,
+      ease: 'none',
+      repeat: -1,
+      force3D: true
+    });
+
+    stackRow.addEventListener('mouseenter', () => tween.pause());
+    stackRow.addEventListener('mouseleave', () => tween.play());
+  }
+
+  const heroCopy = document.querySelector('.hero-copy');
+  const heroVisual = document.querySelector('.hero-visual');
+  if (window.gsap && window.ScrollTrigger && heroCopy && heroVisual) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(heroCopy, {
+      x: -80,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#home',
+        start: 'top 75%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    gsap.from(heroVisual, {
+      x: 80,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#home',
+        start: 'top 75%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  }
+
   const projectsGrid = document.querySelector('#projectsGrid');
   const projectFilters = document.querySelector('#projectFilters');
   const teamGrid = document.querySelector('#teamGrid');
 
   const fallbackProjects = [
-    { title: 'FitZone — Fitness Website', thumbLabel: 'FitZone', thumbTag: 'Website', thumbClass: 'thumb-1', category: 'Websites', meta: 'React · Node.js · MongoDB', link: '#' },
-    { title: 'TaskPro — Project Management App', thumbLabel: 'TaskPro', thumbTag: 'Web App', thumbClass: 'thumb-2', category: 'Web Applications', meta: 'MERN Stack · Tailwind CSS', link: '#' },
-    { title: 'UrbanNest — Real Estate Website', thumbLabel: 'UrbanNest', thumbTag: 'Website', thumbClass: 'thumb-3', category: 'Websites', meta: 'HTML · CSS · JavaScript', link: '#' },
-    { title: 'ShopEase — E-Commerce Store', thumbLabel: 'ShopEase', thumbTag: 'E-Commerce', thumbClass: 'thumb-4', category: 'E-Commerce', meta: 'React · Stripe · Node.js', link: '#' },
-    { title: 'FoodBlog — Blog Platform', thumbLabel: 'FoodBlog', thumbTag: 'Website', thumbClass: 'thumb-5', category: 'Websites', meta: 'React · Sanity CMS', link: '#' },
-    { title: 'FoodHub — Food Delivery App', thumbLabel: 'FoodHub', thumbTag: 'Web App', thumbClass: 'thumb-6', category: 'Web Applications', meta: 'MERN Stack · Socket.io', link: '#' },
-    { title: 'TravelGo — Travel Website', thumbLabel: 'TravelGo', thumbTag: 'Website', thumbClass: 'thumb-7', category: 'Websites', meta: 'React · Framer Motion', link: '#' },
-    { title: 'SaaSify — SaaS Landing Page', thumbLabel: 'SaaSify', thumbTag: 'Landing Page', thumbClass: 'thumb-8', category: 'Landing Pages', meta: 'HTML · CSS · JavaScript', link: '#' }
+    { title: 'FitZone — Fitness Website', thumbLabel: 'FitZone', thumbTag: 'Website', thumbClass: 'thumb-1', category: 'Websites', meta: 'React · Node.js · MongoDB', link: '#', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'TaskPro — Project Management App', thumbLabel: 'TaskPro', thumbTag: 'Web App', thumbClass: 'thumb-2', category: 'Web Applications', meta: 'MERN Stack · Tailwind CSS', link: '#', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'UrbanNest — Real Estate Website', thumbLabel: 'UrbanNest', thumbTag: 'Website', thumbClass: 'thumb-3', category: 'Websites', meta: 'HTML · CSS · JavaScript', link: '#', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'ShopEase — E-Commerce Store', thumbLabel: 'ShopEase', thumbTag: 'E-Commerce', thumbClass: 'thumb-4', category: 'E-Commerce', meta: 'React · Stripe · Node.js', link: '#', image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'FoodBlog — Blog Platform', thumbLabel: 'FoodBlog', thumbTag: 'Website', thumbClass: 'thumb-5', category: 'Websites', meta: 'React · Sanity CMS', link: '#', image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'FoodHub — Food Delivery App', thumbLabel: 'FoodHub', thumbTag: 'Web App', thumbClass: 'thumb-6', category: 'Web Applications', meta: 'MERN Stack · Socket.io', link: '#', image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'TravelGo — Travel Website', thumbLabel: 'TravelGo', thumbTag: 'Website', thumbClass: 'thumb-7', category: 'Websites', meta: 'React · Framer Motion', link: '#', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80' },
+    { title: 'SaaSify — SaaS Landing Page', thumbLabel: 'SaaSify', thumbTag: 'Landing Page', thumbClass: 'thumb-8', category: 'Landing Pages', meta: 'HTML · CSS · JavaScript', link: '#', image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=80' }
   ];
 
   const fallbackTeam = [
@@ -77,7 +136,12 @@
 
     projectsGrid.innerHTML = filteredItems.map(project => `
       <div class="proj-card">
-        <div class="proj-thumb ${project.thumbClass || ''}">${project.thumbLabel || ''}<span class="tag">${project.thumbTag || ''}</span></div>
+        <div class="proj-thumb ${project.thumbClass || ''}">
+          ${project.image ? `<img src="${project.image}" alt="${project.title || project.thumbLabel || 'Project image'}">` : ''}
+          <div class="proj-thumb-overlay"></div>
+          <div class="proj-thumb-content">${project.thumbLabel || ''}</div>
+          <span class="tag">${project.thumbTag || ''}</span>
+        </div>
         <div class="proj-body">
           <h4>${project.title || ''}</h4>
           <div class="meta">${project.meta || ''}</div>

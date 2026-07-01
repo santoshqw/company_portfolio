@@ -1,21 +1,42 @@
 [
   {
-    "title": "FitZone — Fitness Website",
-    "thumbLabel": "FitZone",
+    "title": "TypeNova-typing website",
+    "thumbLabel": "TypeNova",
     "thumbTag": "Website",
     "thumbClass": "thumb-1",
     "category": "Websites",
     "meta": "React · Node.js · MongoDB",
-    "link": "#"
+    "link": "https://typenova-1.onrender.com",
+    "image": "./assets/typenova.png"
   },
-  {
-    "title": "TaskPro — Project Management App",
-    "thumbLabel": "TaskPro",
-    "thumbTag": "Web App",
-    "thumbClass": "thumb-2",
-    "category": "Web Applications",
-    "meta": "MERN Stack · Tailwind CSS",
-    "link": "#"
+    {
+    "title": "ExamPrep website",
+    "thumbLabel": "ExamPrep",
+    "thumbTag": "Website",
+    "thumbClass": "thumb-1",
+    "category": "Websites",
+    "meta": "React · Node.js · MongoDB",
+    "link": "https://exam-prep-rtyg.onrender.com/",
+    "image": "./assets/examprep.png"
+  },
+     {
+    "title": "News website",
+    "thumbLabel": "News website",
+    "thumbTag": "Website",
+    "thumbClass": "thumb-1",
+    "category": "Websites",
+    "meta": "React · Node.js · MongoDB",
+    "link": "https://news-app-react-3fbj.vercel.app/",
+    "image": "./assets/newswebsite.png"
+  },
+   {
+    "title": "Agri vision",
+    "thumbLabel": "Agricultural website",
+    "thumbTag": "Website",
+    "thumbClass": "thumb-1",
+    "category": "Websites",
+    "meta": "React · Node.js · MongoDB .django",
+    "link": "https://news-app-react-3fbj.vercel.app/",
+    "image": "./assets/newswebsite.png"
   }
- 
 ]
