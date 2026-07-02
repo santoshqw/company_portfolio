@@ -3,19 +3,6 @@
   const nav = document.querySelector('#mainNav');
   const navIndicator = document.querySelector('.nav-indicator');
   const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
-  const scrollToSection = (href) => {
-    if (!href || !href.startsWith('#')) return false;
-    const targetId = href.slice(1);
-    const target = document.getElementById(targetId);
-    if (!target) return false;
-
-    const offset = 96;
-    const top = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - offset);
-    window.scrollTo({ top, behavior: 'smooth' });
-    window.location.hash = targetId;
-    history.pushState(null, '', href);
-    return true;
-  };
   const moveNavIndicator = (link) => {
     if (!nav || !navIndicator || !link) return;
     const navRect = nav.getBoundingClientRect();
@@ -249,6 +236,72 @@
     renderTeam(teamMembers);
   });
 
+  const contactActions = document.querySelector('#contactActions');
+  if (contactActions) {
+    fetch('company-links.json')
+      .then(response => response.json())
+      .then((links) => {
+        const items = [
+          { key: 'whatsapp', label: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: links.whatsapp || '#' },
+          { key: 'linkedin', label: 'LinkedIn', icon: 'fa-brands fa-linkedin-in', url: links.linkedin || '#' },
+          { key: 'fiverr', label: 'Fiverr', icon: 'fa-solid fa-briefcase', url: links.fiverr || '#' }
+        ];
+
+        contactActions.innerHTML = items.map((item) => `
+          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="contact-action ${item.key}">
+            <i class="${item.icon}" aria-hidden="true"></i>
+            <span>${item.label}</span>
+          </a>
+        `).join('');
+      })
+      .catch(() => {
+        contactActions.innerHTML = '';
+      });
+  }
+
+  const contactForm = document.querySelector('#contactForm');
+  const formStatus = document.querySelector('#formStatus');
+  const successPopup = document.querySelector('#successPopup');
+
+  const showSuccessPopup = () => {
+    if (!successPopup) return;
+    successPopup.classList.add('show');
+    clearTimeout(showSuccessPopup.timer);
+    showSuccessPopup.timer = setTimeout(() => {
+      successPopup.classList.remove('show');
+    }, 2500);
+  };
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!window.emailjs) {
+        formStatus.textContent = 'Email service is unavailable. Please try again later.';
+        return;
+      }
+
+      const senderEmail = contactForm.email?.value?.trim() || '';
+      const messageText = contactForm.message?.value?.trim() || '';
+
+      const templateParams = {
+        reply_to: senderEmail,
+        email: senderEmail,
+        message: `From: ${senderEmail}\n\n${messageText}`
+      };
+
+      formStatus.textContent = 'Sending...';
+      try {
+        await emailjs.send('service_u1f9fxh', 'template_jccj3me', templateParams);
+        formStatus.textContent = 'Message sent! We will reply to your email soon.';
+        contactForm.reset();
+        showSuccessPopup();
+      } catch (error) {
+        console.error('EmailJS error:', error);
+        formStatus.textContent = 'Something went wrong. Please try again later.';
+      }
+    });
+  }
+
   // mobile menu toggle
   const header = document.querySelector('header');
   const menuToggle = document.querySelector('.menu-toggle');
@@ -277,16 +330,10 @@
     }
 
     mainNav.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (event) => {
-        const href = link.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
-
-        event.preventDefault();
-        if (window.innerWidth < 900) closeMenu();
-
-        setTimeout(() => {
-          scrollToSection(href);
-        }, window.innerWidth < 900 ? 260 : 0);
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 900) {
+          closeMenu();
+        }
       });
     });
   }

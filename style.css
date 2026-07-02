@@ -19,7 +19,7 @@
     --shadow: 0 10px 30px -12px rgba(15,23,41,.12);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth; scroll-padding-top:96px;}
+  html{scroll-behavior:smooth; scroll-padding-top:110px;}
   body{
     font-family:'Inter', sans-serif;
     color:var(--ink-900);
@@ -40,7 +40,7 @@
   @media (max-width:380px){
     .wrap{padding:0 16px;}
   }
-  section{padding:96px 0; scroll-margin-top:96px;}
+  section{padding:96px 0; scroll-margin-top:110px;}
   @media (max-width:640px){
     section{padding:56px 0;}
     .section-head{margin:0 auto 32px;}
@@ -56,7 +56,7 @@
 
   /* Header */
   header{
-    position:sticky; top:0; z-index:50; background:rgba(255,255,255,.9);
+    position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(255,255,255,.95);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
   }
   /* FIX: nowrap so the menu toggle never gets pushed off-canvas on narrow phones */
@@ -128,9 +128,20 @@
     header.menu-open .nav{transform:translateX(0);}
     header.menu-open .menu-toggle i{transform:scale(.92);}
     .menu-overlay{
-      position:fixed; inset:0; background:rgba(15,23,41,.16); opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:60;
+      position:fixed; inset:0; background:rgba(15,23,41,.16); opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:40;
     }
     header.menu-open + .menu-overlay{opacity:1; pointer-events:auto;}
+
+    /* FIX: keep the header (and the nav drawer inside it) stacked above
+       the overlay while the menu is open. Without this, the overlay's
+       z-index could out-rank the header's own stacking context and
+       intercept taps meant for the nav links, so links never navigated. */
+    header.menu-open{
+      z-index:80;
+    }
+    header.menu-open .nav{
+      z-index:90;
+    }
   }
   @media(max-width:480px){
     .nav-inner{padding:14px 16px;}
@@ -254,6 +265,43 @@
   .card:hover .learn svg{transform:translateX(3px);}
   .bg-cloud{background:var(--cloud);}
 
+  .contact-grid{display:grid; grid-template-columns:1fr; gap:36px; align-items:start;}
+  .contact-copy{text-align:center;}
+  .contact-copy .contact-lead{color:var(--ink-500); max-width:520px; margin:18px auto 28px; line-height:1.7;}
+  .contact-actions{display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
+  .contact-action{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-width:150px; padding:14px 18px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--ink-900); font-weight:700; font-size:15px; box-shadow:var(--shadow); transition:.2s;}
+  .contact-action:hover{transform:translateY(-2px); border-color:var(--blue-600); color:var(--blue-600);}
+  .contact-action i{font-size:16px;}
+  .contact-action.whatsapp{color:#25D366;}
+  .contact-action.linkedin{color:#0A66C2;}
+  .contact-action.fiverr{color:#1DBF73;}
+  .contact-form{max-width:540px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:16px;}
+  .contact-form h3{font-size:24px; font-weight:800; margin-bottom:0;}
+  .contact-form .form-copy{color:var(--ink-500); line-height:1.7; margin-bottom:8px;}
+  .contact-form input,
+  .contact-form textarea{width:100%; border:1px solid var(--line); border-radius:18px; background:#fff; color:var(--ink-900); padding:16px 18px; font-size:15px; font-weight:500; transition:.2s;}
+  .contact-form input:focus,
+  .contact-form textarea:focus{outline:none; border-color:var(--blue-600); box-shadow:0 0 0 4px rgba(79,110,255,.12);}
+  .contact-form textarea{min-height:160px; resize:vertical;}
+  .contact-form button{align-self:center;}
+  .form-status{font-size:14px; color:var(--ink-500); margin:0; min-height:22px; text-align:center;}
+  .success-popup{position:fixed; inset:0 0 auto 0; display:flex; align-items:flex-start; justify-content:center; padding:20px 16px; background:rgba(15,23,41,.0); opacity:0; pointer-events:none; transition:.25s; z-index:100;}
+  .success-popup.show{opacity:1; pointer-events:auto; background:rgba(15,23,41,.18);}
+  .success-popup__content{display:flex; align-items:center; gap:12px; background:#fff; border-radius:18px; padding:16px 20px; box-shadow:var(--shadow); transform:translateY(-12px); transition:.25s;}
+  .success-popup.show .success-popup__content{transform:translateY(0);}
+  .success-popup i{font-size:22px; color:var(--mint-ink);}
+  .success-popup p{margin:0; font-weight:700; color:var(--ink-900);}
+
+  @media(min-width:900px){
+    .contact-grid{grid-template-columns:1fr 1.1fr;}
+    .contact-copy{text-align:left;}
+    .contact-actions{justify-content:flex-start;}
+  }
+
+  @media(max-width:640px){
+    .contact-form{gap:14px;}
+  }
+
   /* Projects */
   .filter-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:40px;}
   .filter-pill{
@@ -293,8 +341,9 @@
     height:150px; display:flex; align-items:flex-start; padding:16px; color:#fff; font-weight:800; font-size:15px; position:relative; overflow:hidden;
   }
   .proj-thumb img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02);
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.02); transition:transform .35s ease;
   }
+  .proj-card:hover .proj-thumb img{transform:scale(1.08);}
   .proj-thumb-overlay{
     position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,23,41,.06), rgba(15,23,41,.55));
   }
