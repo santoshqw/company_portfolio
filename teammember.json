@@ -1,30 +1,41 @@
 [
   {
-    "name": "Rohit Sharma",
-    "role": "Founder & CEO",
-    "bio": "Full-stack developer with 8+ years of experience building scalable web applications.",
+    "name": "Santosh Majakoti",
+    "role": "Full stack developer",
+    "bio": "Team member",
     "initials": "RS",
-    "image": "logo.jpg",
+    "image": "./assets/santoshjr.png",
     "gradient": "linear-gradient(135deg,#2f5bff,#1d3fd6)",
-    "socials": ["in", "gh", "tw"]
+    "socials": [
+      { "platform": "in", "url": "https://www.linkedin.com/in/santosh-jr-540320324/" },
+      { "platform": "gh", "url": "https://github.com/santoshqw" }
+     
+    ]
   }
   ,
   {
-    "name": "Aisha Khan",
-    "role": "UI/UX Designer",
-    "bio": "Designs clean, user-friendly interfaces that create meaningful user experiences.",
+    "name": "Roman Adhikari",
+    "role": "Frontend",
+    "bio": "Team member",
     "initials": "AK",
-    "image": "",
+    "image": "./assets/roman.jpg",
     "gradient": "linear-gradient(135deg,#e2632a,#f7a05a)",
-    "socials": ["in", "gh", "tw"]
+    "socials": [
+      { "platform": "in", "url":"https://www.linkedin.com/in/roman-adhikari-00b90b336/" },
+      { "platform": "gh", "url": "https://github.com/R0MAN05" }
+    ]
   },
   {
-    "name": "Arjun Mehta",
-    "role": "Frontend Developer",
-    "bio": "Specializes in React and modern JavaScript to build fast and interactive UIs.",
+    "name": "Jeevan Neupane",
+    "role": "Frontend Developer & AI/ML",
+    "bio": "Team member",
     "initials": "AM",
-    "image": "",
+    "image": "./assets/jeevan.jpg",
     "gradient": "linear-gradient(135deg,#0e7a4e,#1fae74)",
-    "socials": ["in", "gh", "tw"]
+    "socials": [
+      { "platform": "in", "url": "https://www.linkedin.com/in/jeevan-neupane-08a5a431a/" },
+      { "platform": "gh", "url": "https://github.com/Jeevan446" }
+     
+    ]
   }
 ]

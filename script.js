@@ -206,9 +206,12 @@
     };
 
     const renderSocial = (social) => {
-      const key = String(social || '').toLowerCase();
-      const config = socialIconMap[key] || { icon: 'fa-link', label: key || 'Social link' };
-      return `<a href="#" aria-label="${config.label}"><i class="fa-brands ${config.icon}" aria-hidden="true"></i></a>`;
+      const platform = typeof social === 'string'
+        ? social
+        : String(social?.platform || social?.key || '').toLowerCase();
+      const config = socialIconMap[platform] || { icon: 'fa-link', label: platform || 'Social link' };
+      const href = typeof social === 'object' && social?.url ? social.url : '#';
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${config.label}"><i class="fa-brands ${config.icon}" aria-hidden="true"></i></a>`;
     };
 
     teamGrid.innerHTML = items.map(member => `
